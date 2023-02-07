@@ -22,7 +22,7 @@ w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 def load_contract():
 
     # Load the contract ABI
-    with open(Path('./contracts/compiled/artregistry_abi.json')) as f:
+    with open(Path('./contracts/compiled/projectregistry_abi.json')) as f:
         contract_abi = json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
@@ -54,18 +54,18 @@ st.markdown("---")
 ################################################################################
 st.markdown("## Register New Carbon Efficient Project")
 
-artwork_name = st.text_input("Enter the name of the Project")
-artist_name = st.text_input("Enter the Location")
-initial_appraisal_value = st.text_input("Enter the initial expected removal of Carbon from Atmosphere")
-artwork_uri = st.text_input("Enter the URI to the Project ESG Report")
+project_name = st.text_input("Enter the name of the Project")
+location_name = st.text_input("Enter the Location")
+initial_appraisal_value = st.text_input("Enter the initial value of carbon credit")
+project_uri = st.text_input("Enter the URI to the Project ESG Report")
 
 if st.button("Register Project"):
-    tx_hash = contract.functions.registerArtwork(
+    tx_hash = contract.functions.registerProject(
         address,
-        artwork_name,
-        artist_name,
+        project_name,
+        location_name,
         int(initial_appraisal_value),
-        artwork_uri
+        project_uri
     ).transact({'from': address, 'gas': 1000000})
     receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     st.write("Transaction receipt mined:")

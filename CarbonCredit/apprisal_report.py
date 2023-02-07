@@ -5,7 +5,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import streamlit as st
 from PIL import Image
-
 load_dotenv(Path('SAMPLE.env'))
 
 # Define and connect a new Web3 provider
@@ -17,12 +16,11 @@ w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_PROVIDER_URI")))
 # 2. Connects to the contract using the contract address and ABI
 ################################################################################
 
-
 @st.cache(allow_output_mutation=True)
 def load_contract():
 
     # Load the contract ABI
-    with open(Path('./contracts/compiled/artregistry_abi.json')) as f:
+    with open(Path('./contracts/compiled/projectregistry_abi.json')) as f:
         contract_abi = json.load(f)
 
     # Set the contract address (this is the address of the deployed contract)
@@ -35,7 +33,6 @@ def load_contract():
     )
 
     return contract
-
 
 # Load the contract
 contract = load_contract()
@@ -59,9 +56,9 @@ tokens = contract.functions.totalSupply().call()
 
 token_id = st.selectbox("Choose an NsB Project ID", list(range(tokens)))
 
-new_appraisal_value = st.text_input("Estimate of GHG reductions")
+new_appraisal_value = st.text_input("Estimate of Carbon Credit Value")
 
-new_NSP_summary = st.text_input('''Enter Category a. Better management of forests b. Avoiding releases of methane gas c. Action to protect forests or grasslands d. Switching to chemicals in refrigeration systems e. Composting organic waste f. Tree planting g. Capturing methane gas generated from livestock h. Increasing the amount of carbon stored in agricultural i. Using crypto mining exhust for heating purpose j. Electricity generation from Solar/bio fule  k. Others ''')
+new_NSP_summary = st.text_input('Enter Category a. Better management of forests b. Avoiding releases of methane gas c. Action to protect forests or grasslands d. Switching to chemicals in refrigeration systems e. Composting organic waste f. Tree planting g. Capturing methane gas generated from livestock h. Increasing the amount of carbon stored in agricultural i. Using crypto mining exhust for heating purpose j. Electricity generation from Solar/bio fule  k. Others')
 GHG_entitlement = st.text_input("Enter Entitlement Details")
 land = st.text_input("Is the project on private land or '\n' Reserve land or \nIndigenous traditional territory or \nCrown Land")
 baseline_senario = st.text_input("The baseline scenario (also known as the business-as-usual case) \n is a description of the activities and GHG emissions that would \n have occurred without the implementation of the offset project.")
